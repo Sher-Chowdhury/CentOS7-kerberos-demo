@@ -25,11 +25,6 @@ sed -i 's/# }/}/g' /etc/krb5.conf     # this should edit the line that's right a
 sed -i 's/# .example.com = EXAMPLE.COM/ .codingbee.net = CODINGBEE.NET/g' /etc/krb5.conf
 sed -i 's/# example.com = EXAMPLE.COM/ codingbee.net = CODINGBEE.NET/g' /etc/krb5.conf
 
-cp /var/kerberos/krb5kdc/kadm5.acl /var/kerberos/krb5kdc/kadm5.acl-orig
-
-sed -i 's/EXAMPLE.COM/CODINGBEE.NET/g' /var/kerberos/krb5kdc/kadm5.acl
-
-
 
 kadmin <<EOF
 MySecretRootPassword
