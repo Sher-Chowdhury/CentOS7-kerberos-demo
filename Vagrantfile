@@ -24,7 +24,6 @@ Vagrant.configure(2) do |config|
     kerberos_server_config.vm.hostname = "kdc.codingbee.net"
     # https://www.vagrantup.com/docs/virtualbox/networking.html
     kerberos_server_config.vm.network "private_network", ip: "192.168.10.100", :netmask => "255.255.255.0", virtualbox__intnet: "intnet1"
-    kerberos_server_config.vm.network "private_network", ip: "10.0.0.10", :netmask => "255.255.255.0", virtualbox__intnet: "intnet2"
 
     kerberos_server_config.vm.provider "virtualbox" do |vb|
       vb.gui = true
@@ -34,8 +33,8 @@ Vagrant.configure(2) do |config|
       vb.name = "centos7_kerberos_server"
     end
 
-#    kerberos_server_config.vm.provision "shell", path: "scripts/install-rpms.sh", privileged: true
-#    kerberos_server_config.vm.provision "shell", path: "scripts/install-gnome-gui.sh", privileged: true
+    kerberos_server_config.vm.provision "shell", path: "scripts/install-rpms.sh", privileged: true
+    kerberos_server_config.vm.provision "shell", path: "scripts/setup-kdc-authentication-system.sh", privileged: true
   end
 
 
@@ -60,7 +59,7 @@ Vagrant.configure(2) do |config|
     #kerberos_client2_config.vm.box = "bento/centos-7.3"
     kerberos_client2_config.vm.box = "bento/centos-7.4"
     kerberos_client2_config.vm.hostname = "kerberos-client.codingbee.net"
-    kerberos_client2_config.vm.network "private_network", ip: "10.0.0.11", :netmask => "255.255.255.0", virtualbox__intnet: "intnet2"
+    kerberos_client2_config.vm.network "private_network", ip: "192.168.10.102", :netmask => "255.255.255.0", virtualbox__intnet: "intnet1"
 
     kerberos_client2_config.vm.provider "virtualbox" do |vb|
       vb.gui = true
@@ -70,6 +69,17 @@ Vagrant.configure(2) do |config|
     end
 
     kerberos_client2_config.vm.provision "shell", path: "scripts/install-rpms.sh", privileged: true
+    kerberos_client2_config.vm.provision "shell", path: "scripts/setup-kerberos-client.sh", privileged: true
+  end
+
+
+  # this line relates to the vagrant-hosts plugin, https://github.com/oscar-stack/vagrant-hosts
+  # it adds entry to the /etc/hosts file. 
+  # this block is placed outside the define blocks so that it gts applied to all VMs that are defined in this vagrantfile. 
+  config.vm.provision :hosts do |provisioner|
+    provisioner.add_host '192.168.10.100', ['kdc', 'kdc.codingbee.net']  
+    provisioner.add_host '192.168.10.101', ['nfs', 'nfs.codingbee.net']
+    provisioner.add_host '192.168.10.102', ['kerberos-client', 'kerberos-client.codingbee.net']
   end
 
 
