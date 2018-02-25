@@ -24,11 +24,11 @@ sed -i 's/# }/}/g' /etc/krb5.conf     # this should edit the line that's right a
 sed -i 's/# .example.com = EXAMPLE.COM/ .codingbee.net = CODINGBEE.NET/g' /etc/krb5.conf
 sed -i 's/# example.com = EXAMPLE.COM/ codingbee.net = CODINGBEE.NET/g' /etc/krb5.conf
 
-
+clienthostname=$(hostname -f)
 kadmin <<EOF
 MySecretRootPassword
-addprinc -randkey host/kerberos-client.codingbee.net 
-ktadd host/kerberos-client.codingbee.net
+addprinc -randkey host/$clienthostname
+ktadd host/$clienthostname
 quit
 EOF
 

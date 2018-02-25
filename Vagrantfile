@@ -42,7 +42,7 @@ Vagrant.configure(2) do |config|
   config.vm.define "kerberos_client1" do |kerberos_client1_config|
     #kerberos_client1_config.vm.box = "bento/centos-7.3"
     kerberos_client1_config.vm.box = "bento/centos-7.4"
-    kerberos_client1_config.vm.hostname = "nfs.codingbee.net"
+    kerberos_client1_config.vm.hostname = "krb-client1.codingbee.net"
     kerberos_client1_config.vm.network "private_network", ip: "192.168.10.101", :netmask => "255.255.255.0", virtualbox__intnet: "intnet1"
 
     kerberos_client1_config.vm.provider "virtualbox" do |vb|
@@ -53,12 +53,12 @@ Vagrant.configure(2) do |config|
     end
 
     kerberos_client1_config.vm.provision "shell", path: "scripts/install-rpms.sh", privileged: true
+    kerberos_client1_config.vm.provision "shell", path: "scripts/setup-kerberos-client.sh", privileged: true
   end
 
   config.vm.define "kerberos_client2" do |kerberos_client2_config|
-    #kerberos_client2_config.vm.box = "bento/centos-7.3"
     kerberos_client2_config.vm.box = "bento/centos-7.4"
-    kerberos_client2_config.vm.hostname = "kerberos-client.codingbee.net"
+    kerberos_client2_config.vm.hostname = "krb-client2.codingbee.net"
     kerberos_client2_config.vm.network "private_network", ip: "192.168.10.102", :netmask => "255.255.255.0", virtualbox__intnet: "intnet1"
 
     kerberos_client2_config.vm.provider "virtualbox" do |vb|
@@ -78,8 +78,8 @@ Vagrant.configure(2) do |config|
   # this block is placed outside the define blocks so that it gts applied to all VMs that are defined in this vagrantfile. 
   config.vm.provision :hosts do |provisioner|
     provisioner.add_host '192.168.10.100', ['kdc.codingbee.net']  
-    provisioner.add_host '192.168.10.101', ['nfs.codingbee.net']
-    provisioner.add_host '192.168.10.102', ['kerberos-client.codingbee.net']
+    provisioner.add_host '192.168.10.101', ['krb-client1.codingbee.net']
+    provisioner.add_host '192.168.10.102', ['krb-client2.codingbee.net']
   end
 
 
