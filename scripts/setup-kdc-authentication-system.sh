@@ -120,7 +120,7 @@ useradd krbtest
 # $ ssh kdc.codingbee.net
 # the following should give a 'not found' error message:
 # $ klist
-# kinit    will get a password prompt, enter: 
+# kinit    will get a password prompt, enter:   TestAccountPassword 
 # klist  # this is to check you have an active token
 # then do:
 # $ ssh kdc.codingbee.net

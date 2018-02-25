@@ -77,9 +77,9 @@ Vagrant.configure(2) do |config|
   # it adds entry to the /etc/hosts file. 
   # this block is placed outside the define blocks so that it gts applied to all VMs that are defined in this vagrantfile. 
   config.vm.provision :hosts do |provisioner|
-    provisioner.add_host '192.168.10.100', ['kdc', 'kdc.codingbee.net']  
-    provisioner.add_host '192.168.10.101', ['nfs', 'nfs.codingbee.net']
-    provisioner.add_host '192.168.10.102', ['kerberos-client', 'kerberos-client.codingbee.net']
+    provisioner.add_host '192.168.10.100', ['kdc.codingbee.net']  
+    provisioner.add_host '192.168.10.101', ['nfs.codingbee.net']
+    provisioner.add_host '192.168.10.102', ['kerberos-client.codingbee.net']
   end
 
 
