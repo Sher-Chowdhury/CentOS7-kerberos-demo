@@ -19,7 +19,6 @@ end
 
 Vagrant.configure(2) do |config|
   config.vm.define "kerberos_server" do |kerberos_server_config|
-    #kerberos_server_config.vm.box = "bento/centos-7.3"
     kerberos_server_config.vm.box = "bento/centos-7.4"
     kerberos_server_config.vm.hostname = "kdc.codingbee.net"
     # https://www.vagrantup.com/docs/virtualbox/networking.html
@@ -40,7 +39,6 @@ Vagrant.configure(2) do |config|
 
 
   config.vm.define "kerberos_client1" do |kerberos_client1_config|
-    #kerberos_client1_config.vm.box = "bento/centos-7.3"
     kerberos_client1_config.vm.box = "bento/centos-7.4"
     kerberos_client1_config.vm.hostname = "krb-client1.codingbee.net"
     kerberos_client1_config.vm.network "private_network", ip: "192.168.10.101", :netmask => "255.255.255.0", virtualbox__intnet: "intnet1"
