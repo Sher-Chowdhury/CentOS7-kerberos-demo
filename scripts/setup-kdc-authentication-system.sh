@@ -87,24 +87,11 @@ authconfig --enablekrb5  --update
 
 
 
-# tip: run 'rpm -ql firewalld' to see a list of xmls files that you can use as templates     
-echo '<?xml version="1.0" encoding="utf-8"?>
-<service>
-  <short>Kerberos</short>
-  <description>Kerberos server protocol</description>
-  <port protocol="tcp" port="88"/>
-  <port protocol="udp" port="88"/>
-  <port protocol="tcp" port="749"/>
-</service>' > /etc/firewalld/services/kerberos.xml
-
-
-systemctl enable firewalld
-systemctl start firewalld
-
-
-firewall-cmd --zone=public --add-service=kerberos
-firewall-cmd --permanent --zone=public --add-service=kerberos
-
+systemctl start firewalld.service
+firewall-cmd --add-service=kerberos --permanent
+firewall-cmd --add-service=kadmin --permanent
+systemctl restart firewalld.service
+systemctl enable firewalld.service
 
 firewall-cmd --list-all
 
