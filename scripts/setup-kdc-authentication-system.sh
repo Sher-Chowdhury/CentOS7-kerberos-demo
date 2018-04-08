@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+# exit 0
 set -ex
 
 echo '##########################################################################'
@@ -58,11 +58,11 @@ systemctl start kadmin
 
 kadmin.local <<EOF
 addprinc root/admin
-MySecretRootPassword
-MySecretRootPassword
+rootpassword
+rootpassword
 addprinc krbtest
-TestAccountPassword
-TestAccountPassword
+testpassword
+testpassword
 addprinc -randkey host/kdc.codingbee.net
 ktadd host/kdc.codingbee.net
 quit

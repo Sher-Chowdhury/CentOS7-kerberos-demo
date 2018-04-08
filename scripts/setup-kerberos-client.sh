@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+# exit 0
 set -ex
 
 echo '##########################################################################'
@@ -26,7 +26,7 @@ sed -i 's/# example.com = EXAMPLE.COM/ codingbee.net = CODINGBEE.NET/g' /etc/krb
 
 clienthostname=$(hostname -f)
 kadmin <<EOF
-MySecretRootPassword
+rootpassword
 addprinc -randkey host/$clienthostname
 ktadd host/$clienthostname
 quit
