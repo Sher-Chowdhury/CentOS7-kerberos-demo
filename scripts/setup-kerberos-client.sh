@@ -56,3 +56,6 @@ useradd krbtest
 # then do:
 # $ ssh kdc.codingbee.net
 # you should be able to log in without a password prompt, or the need to first setup private+public ssh keys. 
+
+
+exit 0
